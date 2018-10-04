@@ -15,17 +15,20 @@ div#rain
 		hi	
 		</div>
 		<script>
+			var RAIN_SPEED = 10,
+			    RAIN_DENSITY = 10, 
+			    RAIN_COLS = 80;
+
 			var rainElem = document.getElementById("rain");	
-			var rain 
 			
-			rainElemArr = ["123456", "2", "3", "4", "5", "6"];
+			rainElemArr = ["", "", "", "", "", ""];
 
 			function generateRainSeedString(rainStringLength, rainDensity) {
 				var rainString = "";
 
 				for (var i = 0; i < rainStringLength; i++) {
-					if (Math.floor(Math.random() * Math.floor(10)) < rainDensity) {
-						rainString += "/";
+					if (Math.floor(Math.random() * Math.floor(100)) < rainDensity) {
+						rainString += "\\";
 					} else {
 						rainString += "&nbsp;"
 					}
@@ -35,19 +38,29 @@ div#rain
 			}
 
 			Array.prototype.rot = function () {
-				this.unshift("");
+				this.unshift("&nbsp;");
+			}
+
+			String.prototype.rot = function () {
+				var splitString = this.split("");
+
+				splitString.rot();
+
+				return splitString.join("");
 			}
 
 			setInterval(function () {
 				var IH = "";
-				rainElemArr[0] = generateRainSeedString(10, 1);
+				rainElemArr[0] = generateRainSeedString(10, 5);
 				rainElemArr.rot();
 				for (var i = 0; i < 5; i++)
 				{
+					rainElemArr[i] = rainElemArr[i].rot();
 					IH += rainElemArr[i] + "<br />";
 				}
 				rainElem.innerHTML = IH;
 			}, 100);
+
 		</script>
 	</body>
 </html>
