@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+<style>
+div#rain
+{
+	width: 64px;
+	height: 64px;
+	font-family: monospace;
+}
+</style>
+	</head>
+	<body>
+		<div id="rain">
+		hi	
+		</div>
+		<script>
+			var rainElem = document.getElementById("rain");	
+			var rain 
+			
+			rainElemArr = ["123456", "2", "3", "4", "5", "6"];
+
+			function generateRainSeedString(rainStringLength, rainDensity) {
+				var rainString = "";
+
+				for (var i = 0; i < rainStringLength; i++) {
+					if (Math.floor(Math.random() * Math.floor(10)) < rainDensity) {
+						rainString += "/";
+					} else {
+						rainString += "&nbsp;"
+					}
+				}
+
+				return rainString;
+			}
+
+			Array.prototype.rot = function () {
+				this.unshift("");
+			}
+
+			setInterval(function () {
+				var IH = "";
+				rainElemArr[0] = generateRainSeedString(10, 1);
+				rainElemArr.rot();
+				for (var i = 0; i < 5; i++)
+				{
+					IH += rainElemArr[i] + "<br />";
+				}
+				rainElem.innerHTML = IH;
+			}, 100);
+		</script>
+	</body>
+</html>
