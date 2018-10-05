@@ -2,26 +2,26 @@
 <html>
 	<head>
 <style>
-div#rain
+pre#rain
 {
-	width: 64px;
-	height: 64px;
+	width: 120px;
+	height: 120px;
 	font-family: monospace;
 }
 </style>
 	</head>
 	<body>
-		<div id="rain">
-		hi	
-		</div>
+		<pre id="rain">
+		</pre>
 		<script>
 			var RAIN_SPEED = 10,
 			    RAIN_DENSITY = 10, 
+			    RAIN_HEIGHT = 20,
 			    RAIN_COLS = 80;
 
 			var rainElem = document.getElementById("rain");	
 			
-			rainElemArr = ["", "", "", "", "", ""];
+			var rainElemArr = [];
 
 			function generateRainSeedString(rainStringLength, rainDensity) {
 				var rainString = "";
@@ -30,15 +30,27 @@ div#rain
 					if (Math.floor(Math.random() * Math.floor(100)) < rainDensity) {
 						rainString += "\\";
 					} else {
-						rainString += "&nbsp;"
+						rainString += " "
 					}
 				}
 
 				return rainString;
 			}
 
+			function lightningAnimation(element) {
+				backgroundColorSteps["#FFF", "#000", "#FFF", "#000", "#000"];
+				foregroundColotSteps["#000", "#FFF", "#000", "#FFF", "#FFF"];
+
+
+			}
+
 			Array.prototype.rot = function () {
-				this.unshift("&nbsp;");
+				this.unshift(" ");
+
+				if (this.length > 20)
+				{
+					this.pop();
+				}
 			}
 
 			String.prototype.rot = function () {
@@ -49,17 +61,23 @@ div#rain
 				return splitString.join("");
 			}
 
+			while (RAIN_HEIGHT > 0)
+			{
+				rainElemArr.push("");
+				RAIN_HEIGHT--;
+			}
+
 			setInterval(function () {
 				var IH = "";
-				rainElemArr[0] = generateRainSeedString(10, 5);
+				rainElemArr[0] = generateRainSeedString(120, 5);
 				rainElemArr.rot();
-				for (var i = 0; i < 5; i++)
+				for (var i = 0; i < rainElemArr.length; i++)
 				{
 					rainElemArr[i] = rainElemArr[i].rot();
 					IH += rainElemArr[i] + "<br />";
 				}
 				rainElem.innerHTML = IH;
-			}, 100);
+			}, 1000/60);
 
 		</script>
 	</body>
