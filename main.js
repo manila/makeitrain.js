@@ -4,7 +4,7 @@ var ctx = canvas.getContext("2d");
 pixels = [];
 
 const generateRainDrop = () => {
-	pixels.push({x: Math.floor(Math.random() * 500), y: 0});
+	pixels.push({x: Math.floor(Math.random() * window.innerWidth), y: 0});
 }
 
 const drawRain = () => {
@@ -20,6 +20,11 @@ const makeItRain = () => {
 	{
 		pixels[i].y++;
 	}
+}
+
+const setupCanvas = (elem) => {
+	elem.style.width = window.innerWidth;
+	elem.style.height = window.innerHeight;
 }
 
 function loop(timestamp) {
