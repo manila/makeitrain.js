@@ -1,10 +1,50 @@
 var canvas = document.getElementById("rainbg");
 var ctx = canvas.getContext("2d");
 
+var WINDOW_SIZE = window.innerWidth;
+var FONT_SIZE = 24;
+var DEVICE_PIXEL_RATIO = window.devicePixelRatio || 1;
+
+class rainDrop {
+	constructor() {
+		this.x = Math.floor((Math.random() * WINDOW_SIZE) / FONT_SIZE);
+		this.y = 0;
+		this.lightLevel = 0;
+		this.state = 0;
+	}
+
+	update() {
+		this.x += FONT_SIZE;
+		this.y += FONT_SIZE;
+	}
+
+	draw() {
+		ctx.drawImage(
+			RAINDROP_CANVAS,  		// Image Source
+			this.lightLevel * FONT_SIZE, 	// Source X 
+			this.state, 			// Source Y
+			FONT_SIZE, 			// Source Width
+			FONT_SIZE, 			// Source Height
+			this.position.x, 		// Destination X
+			this.position.y			// Destination Y
+			); 
+	}
+}
+
+// light level from 0..4
+const drawRainDrop = (lightLevel) => {
+	if (lightLevel >= 0 && lightLevel <= 4)
+	{
+		return 
+	}
+}
+
 pixels = [];
 
+rain = [];
+
 const generateRainDrop = () => {
-	pixels.push({x: Math.floor(Math.random() * window.innerWidth), y: 0});
+	pixels.push({x: Math.floor(Math.random() * window.innerWidth * window.devicePixelRatio), y: 0});
 }
 
 const drawRain = () => {
@@ -22,12 +62,14 @@ const makeItRain = () => {
 	}
 }
 
-const setupCanvas = (elem) => {
-	elem.style.width = window.innerWidth;
-	elem.style.height = window.innerHeight;
+const setupCanvas = () => {
+	canvas.width = window.innerWidth * window.devicePixelRatio;
+	canvas.style.width = window.innerWidth + "px";
+	canvas.height = window.innerHeight * window.devicePixelRatio;
+	canvas.style.height = window.innerHeight + "px";
 }
 
-function loop(timestamp) {
+const loop = () => {
 	generateRainDrop();
 	drawRain();
 	makeItRain();
@@ -35,5 +77,9 @@ function loop(timestamp) {
 }
 
 window.addEventListener("load", function () {
-	window.requestAnimationFrame(loop);
+	setupCanvas();
+	ctx = canvas.getContext("2d");
+	ctx.font = '24px monospace';
+	ctx.fillText ('Hello World!', 200, 200);
+	//window.requestAnimationFrame(loop);
 });
