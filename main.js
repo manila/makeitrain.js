@@ -1,5 +1,7 @@
 var canvas = document.getElementById("rainbg");
 var ctx = canvas.getContext("2d");
+var RAINDROP_CANVAS = document.getElementById("raindrops");
+var rctx = canvas.getContext("2d");
 
 var WINDOW_SIZE = window.innerWidth;
 var FONT_SIZE = 24;
@@ -35,13 +37,13 @@ class rainDrop {
 const drawRainDrop = (lightLevel) => {
 	if (lightLevel >= 0 && lightLevel <= 4)
 	{
-		return 
+		return 0;
 	}
 }
 
 pixels = [];
 
-rain = [];
+rainArray = [];
 
 const generateRainDrop = () => {
 	pixels.push({x: Math.floor(Math.random() * window.innerWidth * window.devicePixelRatio), y: 0});
