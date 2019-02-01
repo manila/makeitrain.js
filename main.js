@@ -1,7 +1,9 @@
 var canvas = document.getElementById("rainbg");
 var ctx = canvas.getContext("2d");
 var RAINDROP_CANVAS = document.getElementById("raindrops");
-var rctx = canvas.getContext("2d");
+var rctx = RAINDROP_CANVAS.getContext("2d");
+
+rctx.fillRect(0,0,100,100);
 
 var WINDOW_SIZE = window.innerWidth;
 var FONT_SIZE = 24;
@@ -9,7 +11,7 @@ var DEVICE_PIXEL_RATIO = window.devicePixelRatio || 1;
 
 class rainDrop {
 	constructor() {
-		this.x = Math.floor((Math.random() * WINDOW_SIZE) / FONT_SIZE);
+		this.x = Math.floor((Math.random() * WINDOW_SIZE * DEVICE_PIXEL_RATIO));
 		this.y = 0;
 		this.lightLevel = 0;
 		this.state = 0;
@@ -50,17 +52,17 @@ const generateRainDrop = () => {
 }
 
 const drawRain = () => {
-	for (let i = 0; i < pixels.length; i++)
+	for (let i = 0; i < rainArray.length; i++)
 	{
 		ctx.fillStyle = "#F00";
-        	ctx.fillRect(pixels[i].x, pixels[i].y, 1, 1);
+        	ctx.fillRect(rainArray[i].x, rainArray[i].y, 5, 5);
 	}
 }
 
 const makeItRain = () => {
-	for (let i = 0; i < pixels.length; i++)
+	for (let i = 0; i < rainArray.length; i++)
 	{
-		pixels[i].y++;
+		rainArray[i].y++;
 	}
 }
 
@@ -83,5 +85,9 @@ window.addEventListener("load", function () {
 	ctx = canvas.getContext("2d");
 	ctx.font = '24px monospace';
 	ctx.fillText ('Hello World!', 200, 200);
-	//window.requestAnimationFrame(loop);
+	for (let a = 0; a < 50; a++) {
+		rainArray.push(new rainDrop());
+	}
+
+	window.requestAnimationFrame(loop);
 });
