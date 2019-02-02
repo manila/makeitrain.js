@@ -20,6 +20,11 @@ class rainDrop {
 	update() {
 		this.x += FONT_SIZE;
 		this.y += FONT_SIZE;
+
+		if (this.y > window.innerHeight * DEVICE_PIXEL_RATIO) {
+			this.y = 0;
+			this.x = Math.floor(Math.random() * WINDOW_SIZE * DEVICE_PIXEL_RATIO);
+		}
 	}
 
 	draw() {
@@ -48,7 +53,10 @@ pixels = [];
 rainArray = [];
 
 const generateRainDrop = () => {
-	pixels.push({x: Math.floor(Math.random() * window.innerWidth * window.devicePixelRatio), y: 0});
+	if (Math.floor(Math.random() * 10) == 1)
+	{
+		rainArray.push(new rainDrop());
+	}
 }
 
 const drawRain = () => {
@@ -62,7 +70,7 @@ const drawRain = () => {
 const makeItRain = () => {
 	for (let i = 0; i < rainArray.length; i++)
 	{
-		rainArray[i].y++;
+		rainArray[i].update();
 	}
 }
 
@@ -74,6 +82,7 @@ const setupCanvas = () => {
 }
 
 const loop = () => {
+	ctx.clearRect(0, 0, window.innerWidth * DEVICE_PIXEL_RATIO, window.innerHeight * DEVICE_PIXEL_RATIO);
 	generateRainDrop();
 	drawRain();
 	makeItRain();
@@ -85,9 +94,6 @@ window.addEventListener("load", function () {
 	ctx = canvas.getContext("2d");
 	ctx.font = '24px monospace';
 	ctx.fillText ('Hello World!', 200, 200);
-	for (let a = 0; a < 50; a++) {
-		rainArray.push(new rainDrop());
-	}
 
 	window.requestAnimationFrame(loop);
 });
