@@ -3,15 +3,18 @@ var ctx = canvas.getContext("2d");
 var RAINDROP_CANVAS = document.getElementById("raindrops");
 var rctx = RAINDROP_CANVAS.getContext("2d");
 
-rctx.fillRect(0,0,100,100);
+rctx.font = "24px monospace";
+rctx.fillText("\\", 0, 12);
 
 var WINDOW_SIZE = window.innerWidth;
 var FONT_SIZE = 24;
 var DEVICE_PIXEL_RATIO = window.devicePixelRatio || 1;
+var MAX_RAIN_DROPS = 75;
+var rainDropCount = 0;
 
 class rainDrop {
 	constructor() {
-		this.x = Math.floor((Math.random() * WINDOW_SIZE * DEVICE_PIXEL_RATIO));
+		this.x = Math.floor((Math.random() * (WINDOW_SIZE * 2) * DEVICE_PIXEL_RATIO) - WINDOW_SIZE);
 		this.y = 0;
 		this.lightLevel = 0;
 		this.state = 0;
@@ -23,7 +26,7 @@ class rainDrop {
 
 		if (this.y > window.innerHeight * DEVICE_PIXEL_RATIO) {
 			this.y = 0;
-			this.x = Math.floor(Math.random() * WINDOW_SIZE * DEVICE_PIXEL_RATIO);
+			this.x = Math.floor(Math.random() * (WINDOW_SIZE * 2) * DEVICE_PIXEL_RATIO) - WINDOW_SIZE;
 		}
 	}
 
@@ -34,8 +37,10 @@ class rainDrop {
 			this.state, 			// Source Y
 			FONT_SIZE, 			// Source Width
 			FONT_SIZE, 			// Source Height
-			this.position.x, 		// Destination X
-			this.position.y			// Destination Y
+			this.x, 		// Destination X
+			this.y,			// Destination Y
+			FONT_SIZE,
+			FONT_SIZE
 			); 
 	}
 }
@@ -53,17 +58,19 @@ pixels = [];
 rainArray = [];
 
 const generateRainDrop = () => {
-	if (Math.floor(Math.random() * 10) == 1)
+	if (Math.floor(Math.random() * 10) == 1 && rainDropCount < MAX_RAIN_DROPS)
 	{
 		rainArray.push(new rainDrop());
+		rainDropCount++;
 	}
 }
 
 const drawRain = () => {
 	for (let i = 0; i < rainArray.length; i++)
 	{
-		ctx.fillStyle = "#F00";
-        	ctx.fillRect(rainArray[i].x, rainArray[i].y, 5, 5);
+		rainArray[i].draw();
+		//ctx.fillStyle = "#F00";
+        	//ctx.fillRect(rainArray[i].x, rainArray[i].y, 5, 5);
 	}
 }
 
@@ -79,6 +86,9 @@ const setupCanvas = () => {
 	canvas.style.width = window.innerWidth + "px";
 	canvas.height = window.innerHeight * window.devicePixelRatio;
 	canvas.style.height = window.innerHeight + "px";
+	rctx.fillColor = "#000"
+	rctx.font = '24px monospace';
+	rctx.fillText('Hello World!', 0, 0);
 }
 
 const loop = () => {
@@ -92,8 +102,8 @@ const loop = () => {
 window.addEventListener("load", function () {
 	setupCanvas();
 	ctx = canvas.getContext("2d");
-	ctx.font = '24px monospace';
-	ctx.fillText ('Hello World!', 200, 200);
+	rctx.font = '24px monospace';
+	rctx.fillText('Hello World!', 200, 200);
 
 	window.requestAnimationFrame(loop);
 });
