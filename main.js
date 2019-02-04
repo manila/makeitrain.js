@@ -91,11 +91,12 @@ const setupCanvas = () => {
 	rctx.fillText('Hello World!', 0, 0);
 }
 
-const loop = () => {
+const loop = (timestamp) => {
 	ctx.clearRect(0, 0, window.innerWidth * DEVICE_PIXEL_RATIO, window.innerHeight * DEVICE_PIXEL_RATIO);
 	generateRainDrop();
 	drawRain();
 	makeItRain();
+	console.log(timestamp);
 	window.requestAnimationFrame(loop);
 }
 
